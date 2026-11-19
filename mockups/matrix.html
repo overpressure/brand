@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Room Icons Preview</title>
+<style>
+  :root {
+    --bg: #f4f5f7; --surface: #ffffff; --ink: #17191e; --muted: #5d6370; --line: #e2e5ea;
+    --accent: #2a66ec; --chip: #eef2fb;
+    --el-bg: #ffffff; --el-side: #f3f4f6; --el-rail: #e9ebef; --el-ink: #17191e; --el-muted: #737d8c; --el-sel: #e1e6ef;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1013; --surface: #1a1c21; --ink: #eceef2; --muted: #9aa1ad; --line: #2b2e35;
+      --accent: #5a92ff; --chip: #23262d;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1013; --surface: #1a1c21; --ink: #eceef2; --muted: #9aa1ad; --line: #2b2e35;
+    --accent: #5a92ff; --chip: #23262d;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Inter, sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 32px 16px 64px; }
+  header { display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  h1 { font-size: 26px; margin: 0; letter-spacing: -0.01em; }
+  h2 { font-size: 18px; margin: 40px 0 6px; }
+  p.lead, p.note { color: var(--muted); margin: 6px 0 0; max-width: 70ch; }
+  button { font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line);
+           border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; margin-top: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
+  .pair { display: flex; gap: 14px; align-items: flex-end; }
+  .pair img { display: block; }
+  .big { width: 128px; height: 128px; }
+  .round { border-radius: 50%; }
+  .sq { width: 64px; height: 64px; border-radius: 14px; }
+  .card h3 { margin: 14px 0 2px; font-size: 16px; }
+  .card code { font-size: 12.5px; color: var(--muted); }
+  .card p { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+  .tag { display: inline-block; font-size: 12px; background: var(--chip); color: var(--muted);
+         border-radius: 999px; padding: 1px 8px; margin-left: 6px; vertical-align: 2px; }
+
+  .sizes { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 8px 18px;
+           margin-top: 16px; overflow-x: auto; }
+  .sizes table { border-collapse: collapse; width: 100%; min-width: 520px; }
+  .sizes th { text-align: left; font-weight: 600; font-size: 13px; color: var(--muted); padding: 10px 8px; }
+  .sizes td { padding: 8px; vertical-align: middle; border-top: 1px solid var(--line); }
+  .sizes td:first-child { font-weight: 600; white-space: nowrap; }
+
+  .mocks { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 16px; margin-top: 16px; }
+  .el { display: flex; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); min-height: 380px;
+        background: var(--el-bg); color: var(--el-ink); font-size: 14px; }
+  .el.dark { --el-bg: #15191e; --el-side: #21262c; --el-rail: #0b0d10; --el-ink: #ebeef2; --el-muted: #8d97a5;
+             --el-sel: #343a43; }
+  .el.light { --el-bg: #ffffff; --el-side: #f3f4f6; --el-rail: #e7e9ed; --el-ink: #17191e; --el-muted: #737d8c;
+              --el-sel: #e1e6ef; }
+  .rail { background: var(--el-rail); width: 64px; padding: 12px 0; display: flex; flex-direction: column;
+          align-items: center; gap: 10px; flex: none; }
+  .rail img, .rail .ph { width: 40px; height: 40px; border-radius: 10px; display: block; }
+  .rail .sel { outline: 2px solid #2a66ec; outline-offset: 3px; }
+  .rail .ph { background: #9aa3b1; opacity: 0.35; }
+  .list { background: var(--el-side); flex: 1; padding: 12px 10px; min-width: 0; }
+  .list .space { font-weight: 700; padding: 4px 8px 10px; display: flex; align-items: center; gap: 8px; }
+  .room { display: flex; gap: 10px; align-items: center; padding: 6px 8px; border-radius: 8px; }
+  .room.sel { background: var(--el-sel); }
+  .room img { width: 32px; height: 32px; border-radius: 50%; flex: none; }
+  .room .t { min-width: 0; }
+  .room .n { font-weight: 600; }
+  .room .s { color: var(--el-muted); font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cap { color: var(--muted); font-size: 13px; margin: 8px 2px 0; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <h1>overpressure room icons</h1>
+      <p class="lead">A draft set for the Matrix space: the space keeps the project's app icon, each room gets one
+        symbol in the logo's blue and its red-zone orange, on the logo's dark tile. Local only: nothing is uploaded.</p>
+    </div>
+    <button id="theme" type="button">Switch light/dark</button>
+  </header>
+
+  <h2>The set</h2>
+  <p class="note">Element shows room icons as circles and spaces as rounded squares; both are shown here.</p>
+  <div class="grid" id="cards"></div>
+
+  <h2>At the sizes clients use</h2>
+  <p class="note">The room list draws them at about 32 px, mentions and pills at 16 to 24 px. Each symbol is one bold
+    shape so that it still reads there.</p>
+  <div class="sizes"><table id="sizes"><thead><tr><th>Room</th><th>96</th><th>64</th><th>40</th><th>32</th><th>24</th><th>16</th></tr></thead><tbody></tbody></table></div>
+
+  <h2>In a room list</h2>
+  <p class="note">A sketch of Element's layout, not a screenshot: the spaces rail on the left, the space's rooms beside it.</p>
+  <div class="mocks">
+    <div><div class="el dark" id="mock-dark"></div><p class="cap">Dark theme</p></div>
+    <div><div class="el light" id="mock-light"></div><p class="cap">Light theme</p></div>
+  </div>
+</main>
+<script>
+  const icons = [
+    { file: "../matrix/space.svg", name: "overpressure", alias: "#overpressure:matrix.org", tag: "space",
+      what: "The project's app icon, as on GitHub. Unchanged." },
+    { file: "../matrix/general.svg", name: "General", alias: "#overpressure-general", what: "The logo's headset with its gauge lenses: home of the project." },
+    { file: "../matrix/announcements.svg", name: "Announcements", alias: "#overpressure-announcements", what: "A megaphone, its sound in the red-zone orange." },
+    { file: "../matrix/help.svg", name: "Help", alias: "#overpressure-help", what: "A lifebuoy, its bands in the red-zone orange." },
+    { file: "../matrix/phoenix.svg", name: "PICO 4", alias: "#overpressure-phoenix", what: "A plain headset with its head strap: the device room. No PICO branding." },
+    { file: "../matrix/dev.svg", name: "Development", alias: "#overpressure-dev", what: "Code brackets, the slash in orange." },
+    { file: "../matrix/offtopic.svg", name: "Off-topic", alias: "#overpressure-offtopic", what: "Two speech bubbles: talking about anything." },
+  ];
+  const topics = {
+    "General": "Start here: everything about overpressure. Rules are pinned.",
+    "Announcements": "Releases, previews worth testing and important warnings.",
+    "Help": "Installing, upgrading and going back to stock.",
+    "PICO 4": "The PICO 4 on overpressure: games, tracking, controllers.",
+    "Development": "Building overpressure: the kernel, the packages, the installer.",
+    "Off-topic": "Everything else: VR in general, other projects.",
+  };
+  const el = (tag, attrs = {}, children = []) => {
+    const node = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === "text") node.textContent = v; else node.setAttribute(k, v);
+    }
+    for (const c of children) node.append(c);
+    return node;
+  };
+
+  const cards = document.getElementById("cards");
+  for (const i of icons) {
+    const isSpace = i.tag === "space";
+    const pair = el("div", { class: "pair" }, [
+      el("img", { src: i.file, alt: i.name, class: "big " + (isSpace ? "" : "round"), style: isSpace ? "border-radius:28px" : "" }),
+      el("img", { src: i.file, alt: "", class: isSpace ? "sq" : "sq round" }),
+    ]);
+    const h = el("h3", { text: i.name });
+    if (i.tag) h.append(el("span", { class: "tag", text: i.tag }));
+    cards.append(el("div", { class: "card" }, [pair, h, el("code", { text: i.alias }), el("p", { text: i.what })]));
+  }
+
+  const tbody = document.querySelector("#sizes tbody");
+  for (const i of icons) {
+    const row = el("tr", {}, [el("td", { text: i.name })]);
+    for (const s of [96, 64, 40, 32, 24, 16]) {
+      row.append(el("td", {}, [el("img", { src: i.file, alt: "", width: s, height: s,
+        style: i.tag === "space" ? `border-radius:${Math.round(s * 0.22)}px` : "border-radius:50%" })]));
+    }
+    tbody.append(row);
+  }
+
+  for (const id of ["mock-dark", "mock-light"]) {
+    const rail = el("div", { class: "rail" }, [
+      el("div", { class: "ph" }), el("img", { src: "../matrix/space.svg", alt: "overpressure", class: "sel" }),
+      el("div", { class: "ph" }), el("div", { class: "ph" }),
+    ]);
+    const list = el("div", { class: "list" }, [el("div", { class: "space", text: "overpressure" })]);
+    icons.slice(1).forEach((i, n) => {
+      list.append(el("div", { class: "room" + (n === 0 ? " sel" : "") }, [
+        el("img", { src: i.file, alt: "" }),
+        el("div", { class: "t" }, [el("div", { class: "n", text: i.name }), el("div", { class: "s", text: topics[i.name] })]),
+      ]));
+    });
+    document.getElementById(id).append(rail, list);
+  }
+
+  const root = document.documentElement;
+  const saved = (() => { try { return localStorage.getItem("theme"); } catch { return null; } })();
+  if (saved) root.dataset.theme = saved;
+  document.getElementById("theme").addEventListener("click", () => {
+    const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = dark ? "light" : "dark";
+    try { localStorage.setItem("theme", root.dataset.theme); } catch { /* private window */ }
+  });
+</script>
+</body>
+</html>

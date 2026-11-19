@@ -1,0 +1,54 @@
+# Every pull request and push to main: the documents' links resolve, nothing private is in the history, and every
+# rendering is there at its size. The last job, ci, is the one check the ruleset requires.
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          args: --no-progress --max-retries 3 "./**/*.md"
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  private:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: overpressure/overpressure
+          path: .overpressure
+      - name: Private data, in every commit
+        run: python3 .overpressure/scripts/check-private.py --repo . --history
+
+  renderings:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Every rendering there, at its size
+        run: python3 scripts/render.py --check
+
+  ci:
+    needs: [links, private, renderings]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Every job passed
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+        run: |
+          bad=$(jq -r 'to_entries[] | select(.value.result != "success") | "\(.key): \(.value.result)"' <<< "$NEEDS")
+          [ -z "$bad" ] || { echo "::error::not passed: $bad"; exit 1; }

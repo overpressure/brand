@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>r/overpressure banner</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; padding: 24px 16px 48px; background: #0b0c0f; color: #e8e9ec;
+         font: 15px/1.5 "Segoe UI", -apple-system, system-ui, sans-serif; }
+  main { max-width: 1240px; margin: 0 auto; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p { color: #9aa0a8; margin: 0 0 24px; }
+  h2 { font-size: 14px; font-weight: 600; color: #c4c8ce; margin: 28px 0 8px; }
+  .frame { position: relative; overflow: hidden; border-radius: 12px; border: 1px solid #262a31; }
+  .frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .full { aspect-ratio: 5 / 1; }
+  .strip { aspect-ratio: 1072 / 128; }
+  .phone { width: 390px; max-width: 100%; aspect-ratio: 390 / 120; }
+  .head { display: flex; align-items: center; gap: 12px; padding: 10px 4px 0; }
+  .icon { width: 64px; height: 64px; border-radius: 50%; border: 4px solid #0b0c0f; margin-top: -40px;
+          background: #0f1013 url("../reddit/icon.png") center / cover; flex: none; position: relative; z-index: 1; }
+  .name { font-weight: 700; font-size: 22px; }
+  .over { position: absolute; left: 14px; bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .over .icon { width: 40px; height: 40px; margin: 0; border-width: 2px; }
+  .over .name { font-size: 17px; text-shadow: 0 1px 3px #000; }
+</style>
+</head>
+<body>
+<main>
+  <h1>r/overpressure banner</h1>
+  <p>1920 × 384 (5:1). How Reddit may crop it: the guides disagree, so here are the likely cases.</p>
+
+  <h2>The whole banner</h2>
+  <div class="frame full"><img src="../reddit/banner.png" alt="The banner"></div>
+
+  <h2>Desktop, a thin strip (1072 × 128), with the icon and name below</h2>
+  <div class="frame strip"><img src="../reddit/banner.png" alt=""></div>
+  <div class="head"><div class="icon"></div><div class="name">r/overpressure</div></div>
+
+  <h2>Phone, the centre, with the name on top</h2>
+  <div class="frame phone"><img src="../reddit/banner.png" alt="">
+    <div class="over"><div class="icon"></div><div class="name">r/overpressure</div></div></div>
+</main>
+</body>
+</html>

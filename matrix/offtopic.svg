@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <title>Off-topic: two speech bubbles</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b2e35"/><stop offset="1" stop-color="#0f1013"/></linearGradient>
+    <linearGradient id="blue" x1="0" y1="130" x2="0" y2="330" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5a92ff"/><stop offset="0.5" stop-color="#2a66ec"/><stop offset="1" stop-color="#1a43b8"/></linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+  <rect x="1.5" y="1.5" width="509" height="509" rx="114.5" fill="none" stroke="#ffffff" stroke-opacity="0.07" stroke-width="3"/>
+  <!-- Back bubble, tail to the lower left. -->
+  <rect x="98" y="128" width="236" height="166" rx="60" fill="url(#blue)"/>
+  <path d="M138 270 L118 338 L204 290 Z" fill="#1f50d0"/>
+  <!-- Front bubble, cut out of the back one by a ring in the tile's colour, tail to the lower right. -->
+  <g stroke="#16181d" stroke-width="14" stroke-linejoin="round">
+    <path d="M372 362 L396 412 L318 370 Z" fill="#eef2fb"/>
+    <rect x="200" y="218" width="216" height="152" rx="56" fill="#eef2fb"/>
+  </g>
+  <path d="M372 362 L396 412 L318 370 Z" fill="#eef2fb"/>
+  <circle cx="258" cy="294" r="17" fill="#2a66ec"/>
+  <circle cx="308" cy="294" r="17" fill="#2a66ec"/>
+  <circle cx="358" cy="294" r="17" fill="#ff7849"/>
+</svg>
