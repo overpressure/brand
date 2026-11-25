@@ -24,6 +24,12 @@ Reddit, the installer's window). The drawings are the source; every PNG is rende
 | [window/](window/) | The app icon (16 to 256 px, light from 64), the mark by height (24 to 72 px), `overpressure.ico` | The installer's window; overpressure/overpressure carries a copy in `overpressure/window/icons/` |
 | [mockups/](mockups/) | [mockups.html](mockups/mockups.html) (the logo in use, light and dark), previews of the Matrix icons and the Reddit banner's crops | Looking at the artwork in place before uploading it |
 
+A new headset gets two files here before its room and repository are set up
+([adding a headset](https://github.com/overpressure/overpressure/blob/main/docs/adding-a-headset.md#the-organizations-part)):
+its room's icon `matrix/<codename>.svg`, the headset seen from the front as it really looks (its shape, cameras
+and straps), in the visor's blue on the dark tile and without the maker's branding; and its repository's social
+card `github/social/<codename>.png`.
+
 The headset's boot screen draws the mark from the same geometry in its own code
 ([pico4-splash.c](https://github.com/overpressure/phoenix/blob/main/src/splash/pico4-splash.c)).
 
