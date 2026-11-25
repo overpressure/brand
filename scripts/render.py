@@ -6,12 +6,15 @@
     python scripts/render.py [PATH...]    render them (or the named ones) again through headless Chromium
 
 A browser renders the drawings as browsers show them (gradients, round caps, filters), at the exact pixel
-size each use takes; the window's Windows icon is assembled from its PNG renderings. The social cards have
-no drawing of their own yet: --check only checks their size.
+size each use takes; the window's Windows icon is assembled from its PNG renderings. The social cards are one
+page, github/social/card.html, with each card's text from github/social/cards.json, set in Segoe UI Variable:
+Windows 11 has it, elsewhere CARD_FONT names its file (Microsoft's, so it is not in this repository).
 """
 
 from __future__ import annotations
 
+import base64
+import json
 import os
 import shutil
 import struct
@@ -19,12 +22,17 @@ import subprocess
 import sys
 import tempfile
 from dataclasses import dataclass
+from html import escape
 from pathlib import Path
+from string import Template
 
 ROOT = Path(__file__).resolve().parents[1]
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 #: The installer's window takes the small drawing up to this size (pixels), the full one above.
 SMALL_UP_TO = 48
+#: The social cards' page and their text.
+CARD = "github/social/card.html"
+CARDS = ROOT / "github/social/cards.json"
 
 
 @dataclass(frozen=True)
@@ -59,8 +67,8 @@ def _window() -> list[Rendering]:
 RENDERINGS = [
     Rendering("github/avatar.png", "logo/overpressure.svg", 512, 512),
     *(
-        Rendering(f"github/social/{name}.png", None, 1280, 640)
-        for name in ("overpressure", "overpressure-light", "phoenix", "packages", "linux", "builder")
+        Rendering(f"github/social/{name}.png", CARD, 1280, 640)
+        for name in ("overpressure", "overpressure-light", "phoenix", "hollywood", "packages", "linux", "builder")
     ),
     *(
         Rendering(f"matrix/{name}.png", f"matrix/{name}.svg", 512, 512)
@@ -108,6 +116,12 @@ def check() -> list[str]:
             continue
         if size != (r.width, r.height):
             problems.append(f"{r.png}: {size[0]} x {size[1]}, not {r.width} x {r.height}")
+    cards = json.loads(CARDS.read_text(encoding="utf-8"))
+    problems.extend(
+        f"{r.png}: no text for it in {CARDS.relative_to(ROOT).as_posix()}"
+        for r in RENDERINGS
+        if r.svg == CARD and Path(r.png).stem not in cards
+    )
     try:
         if sorted(ico_sizes(ROOT / ICO)) != sorted(ICO_SIZES):
             problems.append(f"{ICO}: sizes {ico_sizes(ROOT / ICO)}, not {list(ICO_SIZES)}")
@@ -136,6 +150,33 @@ def browser() -> str:
     raise FileNotFoundError(msg)
 
 
+def card_font() -> Path:
+    """Return the file of Segoe UI Variable, the cards' font: CARD_FONT, else Windows' own."""
+    named = os.environ.get("CARD_FONT")
+    found = Path(named) if named else Path(os.environ.get("WINDIR", r"C:\Windows")) / "Fonts" / "SegUIVar.ttf"
+    if not found.is_file():
+        msg = f"the social cards are set in Segoe UI Variable, not found at {found}: set CARD_FONT to its file"
+        raise FileNotFoundError(msg)
+    return found
+
+
+def card_page(name: str) -> str:
+    """Return the page of the social card @p name: card.html with its text from cards.json, the font inlined."""
+    card = json.loads(CARDS.read_text(encoding="utf-8"))[name]
+    owner = card.get("owner")
+    font = base64.b64encode(card_font().read_bytes()).decode("ascii")
+    return Template((ROOT / CARD).read_text(encoding="utf-8")).substitute(
+        font=f"data:font/ttf;base64,{font}",
+        root=ROOT.as_uri(),
+        classes="light" if card.get("light") else "",
+        icon="logo/overpressure-light.svg" if card.get("light") else "logo/overpressure.svg",
+        owner=f'<div class="own">{escape(owner)} /</div>' if owner else "",
+        title=escape(card["title"]),
+        lines="<br>".join(escape(line) for line in card["lines"]),
+        topics="".join(f"<span>{escape(topic)}</span>" for topic in card["topics"]),
+    )
+
+
 def render(r: Rendering, chrome: str) -> None:
     """Render @p r's drawing to its PNG at its size, on a transparent background."""
     if r.svg is None:
@@ -143,12 +184,15 @@ def render(r: Rendering, chrome: str) -> None:
         raise ValueError(msg)
     with tempfile.TemporaryDirectory() as tmp:
         page = Path(tmp) / "page.html"
-        page.write_text(
-            "<!doctype html><html><head><style>html,body{margin:0;background:transparent}img{display:block}"
-            f'</style></head><body><img src="{(ROOT / r.svg).as_uri()}" width="{r.width}" height="{r.height}">'
-            "</body></html>",
-            encoding="utf-8",
-        )
+        if r.svg == CARD:
+            page.write_text(card_page(Path(r.png).stem), encoding="utf-8")
+        else:
+            page.write_text(
+                "<!doctype html><html><head><style>html,body{margin:0;background:transparent}img{display:block}"
+                f'</style></head><body><img src="{(ROOT / r.svg).as_uri()}" width="{r.width}" height="{r.height}">'
+                "</body></html>",
+                encoding="utf-8",
+            )
         out = Path(tmp) / "out.png"
         subprocess.run(  # a browser the owner has, fixed arguments
             [
@@ -159,6 +203,7 @@ def render(r: Rendering, chrome: str) -> None:
                 "--force-device-scale-factor=1",
                 "--default-background-color=00000000",
                 f"--window-size={r.width},{r.height}",
+                "--virtual-time-budget=5000",  # fonts and images loaded before the screenshot
                 f"--screenshot={out}",
                 page.as_uri(),
             ],

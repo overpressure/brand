@@ -28,7 +28,8 @@ A new headset gets two files here before its room and repository are set up
 ([adding a headset](https://github.com/overpressure/overpressure/blob/main/docs/adding-a-headset.md#the-organizations-part)):
 its room's icon `matrix/<codename>.svg`, the headset seen from the front as it really looks (its shape, cameras
 and straps), in the visor's blue on the dark tile and without the maker's branding; and its repository's social
-card `github/social/<codename>.png`.
+card `github/social/<codename>.png`, its name, description and topics an entry in
+[cards.json](github/social/cards.json). Each gets its name in `scripts/render.py`'s list, which renders it.
 
 The headset's boot screen draws the mark from the same geometry in its own code
 ([pico4-splash.c](https://github.com/overpressure/phoenix/blob/main/src/splash/pico4-splash.c)).
@@ -50,13 +51,20 @@ The headset's boot screen draws the mark from the same geometry in its own code
 ```sh
 python scripts/render.py               # every PNG again from its drawing, and window/overpressure.ico
 python scripts/render.py reddit/banner.png
+python scripts/render.py github/social/hollywood.png   # a social card, from its entry in cards.json
 python scripts/render.py --check       # every rendering there, at its size (CI runs it)
 python scripts/banner.py               # the Reddit banner's drawing, from its parameters
 ```
 
 A Chromium renders the drawings as browsers show them, at each file's exact size, on a transparent background
 (`CHROME` names one if it isn't found). After a drawing changes, render its PNGs again rather than editing
-them, and upload what changed where the table says. The social cards have no drawing of their own yet.
+them, and upload what changed where the table says.
+
+The social cards are one page, [card.html](github/social/card.html), filled in from
+[cards.json](github/social/cards.json), so that every card has the same layout, sizes and colours: a
+repository's card names its owner above its name, and `"light": true` puts a card on the light tile. They are
+set in Segoe UI Variable, the typeface the mockups use: Windows 11 has it; elsewhere `CARD_FONT` names its
+file. It is Microsoft's, so it is not in this repository.
 
 ## Changes
 

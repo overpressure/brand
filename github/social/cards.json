@@ -1,0 +1,43 @@
+{
+  "overpressure": {
+    "title": "overpressure",
+    "lines": ["Linux and a SteamOS-compatible userspace", "on standalone VR headsets"],
+    "topics": ["PICO 4", "Valve's kernel", "SteamVR", "Unlicense"]
+  },
+  "overpressure-light": {
+    "title": "overpressure",
+    "lines": ["Linux and a SteamOS-compatible userspace", "on standalone VR headsets"],
+    "topics": ["PICO 4", "Valve's kernel", "SteamVR", "Unlicense"],
+    "light": true
+  },
+  "phoenix": {
+    "owner": "overpressure",
+    "title": "phoenix",
+    "lines": ["The PICO 4 for overpressure:", "its system, tooling and releases"],
+    "topics": ["PICO 4", "Snapdragon XR2", "SteamVR", "Unlicense"]
+  },
+  "hollywood": {
+    "owner": "overpressure",
+    "title": "hollywood",
+    "lines": ["The Meta Quest 2 for overpressure:", "its system, tooling and releases"],
+    "topics": ["Meta Quest 2", "Snapdragon XR2", "SteamVR", "Unlicense"]
+  },
+  "packages": {
+    "owner": "overpressure",
+    "title": "packages",
+    "lines": ["Arch packages for overpressure's", "headsets, in layers"],
+    "topics": ["Arch Linux", "aarch64", "pacman", "Unlicense"]
+  },
+  "linux": {
+    "owner": "overpressure",
+    "title": "linux",
+    "lines": ["Valve's Steam Frame kernel", "with overpressure's changes"],
+    "topics": ["Linux 7.2", "SM8250", "PICO 4", "GPL-2.0"]
+  },
+  "builder": {
+    "owner": "overpressure",
+    "title": "builder",
+    "lines": ["The build image every", "overpressure build runs in"],
+    "topics": ["amd64 and arm64", "Pinned by digest", "Unlicense"]
+  }
+}
