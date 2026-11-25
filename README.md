@@ -19,7 +19,7 @@ Reddit, the installer's window). The drawings are the source; every PNG is rende
 | --- | --- | --- |
 | [logo/](logo/README.md) | The drawings: the app icon on a dark and a light tile, its small version, the mark without the tile, one colour | Everything else here; the READMEs of overpressure's repositories |
 | [github/](github/) | `avatar.png` (512 × 512); `social/` with each repository's social preview (1280 × 640) | The organization's avatar and each repository's *Social preview*, uploaded in their settings |
-| [matrix/](matrix/) | The space's and each room's icons (`.svg`, 512 × 512 `.png`) | The Matrix space `#overpressure:matrix.org` and its rooms, each room's settings |
+| [matrix/](matrix/) | The space's and each room's icons, and `goggles`, the project's bot Goggles (`.svg`, 512 × 512 `.png`) | The Matrix space `#overpressure:matrix.org` and its rooms, each room's settings; Goggles' avatar in its account's settings (Matrix shows it as a circle) |
 | [reddit/](reddit/) | `icon.png` (256 × 256), `banner.svg` and `banner.png` (1920 × 384) | r/overpressure's *Community appearance* |
 | [window/](window/) | The app icon (16 to 256 px, light from 64), the mark by height (24 to 72 px), `overpressure.ico` | The installer's window; overpressure/overpressure carries a copy in `overpressure/window/icons/` |
 | [mockups/](mockups/) | [mockups.html](mockups/mockups.html) (the logo in use, light and dark), previews of the Matrix icons and the Reddit banner's crops | Looking at the artwork in place before uploading it |

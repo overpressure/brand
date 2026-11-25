@@ -72,7 +72,7 @@ RENDERINGS = [
     ),
     *(
         Rendering(f"matrix/{name}.png", f"matrix/{name}.svg", 512, 512)
-        for name in ("space", "general", "announcements", "help", "phoenix", "hollywood", "dev", "offtopic")
+        for name in ("space", "general", "announcements", "help", "phoenix", "hollywood", "dev", "offtopic", "goggles")
     ),
     Rendering("reddit/icon.png", "logo/overpressure.svg", 256, 256),
     Rendering("reddit/banner.png", "reddit/banner.svg", 1920, 384),

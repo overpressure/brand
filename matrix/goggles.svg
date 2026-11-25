@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <title>Goggles, overpressure's bot: the logo's visor come to life, with big shiny eyes, rosy cheeks and a small smile</title>
+  <defs>
+    <radialGradient id="bg" cx="0.5" cy="0.45" r="0.7"><stop offset="0" stop-color="#1b2c5c"/><stop offset="1" stop-color="#0d0e11"/></radialGradient>
+    <linearGradient id="visor" x1="0" y1="150" x2="0" y2="380" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#5a92ff"/><stop offset="0.5" stop-color="#2a66ec"/><stop offset="1" stop-color="#1a43b8"/></linearGradient>
+    <linearGradient id="sheen" x1="0" y1="170" x2="0" y2="300" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffffff" stop-opacity="0.3"/><stop offset="0.45" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+    <linearGradient id="mount" x1="0" y1="230" x2="0" y2="300" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2457cf"/><stop offset="1" stop-color="#163a9e"/></linearGradient>
+    <path id="spark" d="M0 -18 C3 -4 4 -3 18 0 C4 3 3 4 0 18 C-3 4 -4 3 -18 0 C-4 -3 -3 -4 0 -18 Z"/>
+  </defs>
+  <!-- A full square: Matrix shows a person's avatar as a circle, so everything stays inside the middle. -->
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <use href="#spark" transform="translate(112 128) scale(1.1)" fill="#ffffff" opacity="0.85"/>
+  <use href="#spark" transform="translate(408 142) scale(0.7)" fill="#ffffff" opacity="0.6"/>
+  <use href="#spark" transform="translate(396 392) scale(0.55)" fill="#ff7849" opacity="0.8"/>
+  <ellipse cx="256" cy="402" rx="128" ry="12" fill="#000000" opacity="0.35"/>
+  <!-- The visor, tilted a little: the logo's shape, its strap as a headband. -->
+  <g transform="rotate(-7 256 266)">
+    <path d="M78 248 C78 92 434 92 434 248" fill="none" stroke="#163a9e" stroke-width="28" stroke-linecap="round"/>
+    <rect x="56" y="232" width="40" height="64" rx="16" fill="url(#mount)"/>
+    <rect x="416" y="232" width="40" height="64" rx="16" fill="url(#mount)"/>
+    <path d="M166 170 H346 A88 88 0 0 1 434 258 V274 A88 88 0 0 1 346 362 H308 C291.4 362 287.2 322 256 322 C224.8 322 220.6 362 204 362 H166 A88 88 0 0 1 78 274 V258 A88 88 0 0 1 166 170 Z" fill="url(#visor)"/>
+    <path d="M166 170 H346 A88 88 0 0 1 434 258 V274 A88 88 0 0 1 346 362 H308 C291.4 362 287.2 322 256 322 C224.8 322 220.6 362 204 362 H166 A88 88 0 0 1 78 274 V258 A88 88 0 0 1 166 170 Z" fill="url(#sheen)"/>
+    <!-- The lenses as big shiny eyes. -->
+    <circle cx="176" cy="258" r="62" fill="#173a9a"/>
+    <circle cx="176" cy="258" r="56" fill="#0b0d12"/>
+    <circle cx="158" cy="236" r="21" fill="#ffffff"/>
+    <circle cx="196" cy="280" r="9" fill="#ffffff"/>
+    <circle cx="336" cy="258" r="62" fill="#173a9a"/>
+    <circle cx="336" cy="258" r="56" fill="#0b0d12"/>
+    <circle cx="318" cy="236" r="21" fill="#ffffff"/>
+    <circle cx="356" cy="280" r="9" fill="#ffffff"/>
+    <!-- Rosy cheeks and a small smile on the bridge. -->
+    <ellipse cx="112" cy="320" rx="22" ry="12" fill="#ff7849" opacity="0.55"/>
+    <ellipse cx="400" cy="320" rx="22" ry="12" fill="#ff7849" opacity="0.55"/>
+    <path d="M241 290 Q256 306 271 290" fill="none" stroke="#0b0d12" stroke-width="7" stroke-linecap="round"/>
+  </g>
+</svg>
