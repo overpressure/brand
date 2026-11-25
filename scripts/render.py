@@ -68,7 +68,7 @@ RENDERINGS = [
     Rendering("github/avatar.png", "logo/overpressure.svg", 512, 512),
     *(
         Rendering(f"github/social/{name}.png", CARD, 1280, 640)
-        for name in ("overpressure", "overpressure-light", "phoenix", "hollywood", "packages", "linux", "builder")
+        for name in ("overpressure", "overpressure-light", "phoenix", "hollywood", "packages", "linux", "builder", "matrix")
     ),
     *(
         Rendering(f"matrix/{name}.png", f"matrix/{name}.svg", 512, 512)
